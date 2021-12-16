@@ -1,11 +1,11 @@
 Package: phacstyle
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Pretty Style to Existing ggplot Objects
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: c(person("David", "Champredon", 
+		role = c("aut", "cre"),
+		email = "david.champredon@canada.ca"))
+Description: Apply pre-defined theme and colour schemes to existing ggplot objects to make them prettier.
 License: MIT
 Encoding: UTF-8
 LazyData: true
