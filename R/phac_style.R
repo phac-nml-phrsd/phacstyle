@@ -5,6 +5,7 @@
 #' @param size.base Integer. Base size for text in plot. Default: \code{size.base=12}
 #' @param palette String. Color palette name used in the \code{rcartocolor} package.
 #' @param color.type String. \code{'d'} for discrete (default), \code{'c'} for continuous
+#' @param font.family String. Name of family fonts used. Default: \code{'sans'}.
 #'
 #' @return A ggplot object with the update style.
 #' @export
@@ -36,7 +37,8 @@
 phac_style <- function(g,
                        size.base = 12,
                        palette = 'Safe',
-                       color.type = 'd') {
+                       color.type = 'd',
+                       font.family = 'sans') {
 
   font.size.title       = size.base + 8
   font.size.subtitle    = size.base + 2
@@ -48,14 +50,14 @@ phac_style <- function(g,
   grey.light     = 'grey80'
   grey.vlight    = 'grey95'
 
-  #g=g.ts
+  # Type of x variable:
   a = g$layers[[1]]$computed_mapping$x
-  xtype = class(g$data[[ a[[2]] ]])
+  xvarname = rlang::quo_get_expr(a)
+  xtype = class(g$data[[ xvarname ]])
 
   th = theme(
 
-    text = element_text(family = 'Helvetica'),
-    # names(pdfFonts())
+    text = element_text(family = font.family), # names(pdfFonts())
 
     # --- Axis
     axis.line.x       = element_line(color = grey.dark),
@@ -97,6 +99,12 @@ phac_style <- function(g,
     plot.caption.position = 'plot'
   )
 
+  # --- For bar plots
+  if(class(g$layers[[1]]$geom)[1] == 'GeomBar'){
+    th = th +
+      theme(panel.grid.major.y = element_blank())
+  }
+
   # --- For faceted plots
 
   # If it's a faceted plot, make the axis text
@@ -133,13 +141,13 @@ phac_style <- function(g,
   # --- Apply the color palettes
   if(color.type == 'd'){
     gg = gg +
-      scale_color_carto_d(palette = palette) +
-      scale_fill_carto_d(palette = palette)
+      rcartocolor::scale_color_carto_d(palette = palette) +
+      rcartocolor::scale_fill_carto_d(palette = palette)
   }
   if(color.type == 'c'){
     gg = gg +
-      scale_color_carto_c(palette = palette) +
-      scale_fill_carto_c(palette = palette)
+      rcartocolor::scale_color_carto_c(palette = palette) +
+      rcartocolor::scale_fill_carto_c(palette = palette)
   }
 
   return(gg)

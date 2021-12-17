@@ -4,7 +4,13 @@
 \alias{phac_style}
 \title{Apply the PHAC style to a ggplot object.}
 \usage{
-phac_style(g, size.base = 12, palette = "Safe", color.type = "d")
+phac_style(
+  g,
+  size.base = 12,
+  palette = "Safe",
+  color.type = "d",
+  font.family = "sans"
+)
 }
 \arguments{
 \item{g}{ggplot object.}
@@ -14,6 +20,8 @@ phac_style(g, size.base = 12, palette = "Safe", color.type = "d")
 \item{palette}{String. Color palette name used in the \code{rcartocolor} package.}
 
 \item{color.type}{String. \code{'d'} for discrete (default), \code{'c'} for continuous}
+
+\item{font.family}{String. Name of family fonts used. Default: \code{'sans'}.}
 }
 \value{
 A ggplot object with the update style.
